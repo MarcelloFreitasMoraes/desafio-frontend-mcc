@@ -6,6 +6,7 @@ import { useAuthStore } from "../auth/useStore";
 
 export const AppRoutes = () => {
     const { isAuthenticated } = useAuthStore(); 
+console.log(isAuthenticated, 'isAuthenticated');
 
     return (
         <BrowserRouter>

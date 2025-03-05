@@ -5,7 +5,7 @@ import { z } from "zod";
 import { Button, Card, Input } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../auth/useStore";
-import { CircleSmall } from "lucide-react";
+import { CircleSmall, MoveLeft } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -36,14 +36,14 @@ const Register: React.FC = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
   });
 
   const onSubmit = async ({ name, email, password }: RegisterFormData) => {
     await registerUser(name, email, password);
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -79,7 +79,10 @@ const Register: React.FC = () => {
           <Button type="submit" variant="danger" size="small">
             Criar
           </Button>
-
+         <div className="flex gap-2 items-center cursor-pointer" onClick={() => navigate("/login")}>
+         <MoveLeft />
+         <p>Voltar</p>
+          </div> 
           {/* Regras da senha */}
           <div className="flex flex-col gap-4 mt-4">
             <div className="flex gap-1 items-center">
