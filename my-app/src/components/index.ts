@@ -1,3 +1,7 @@
 export { default as Button } from './button'
 export { default as Card } from './card'
 export { default as Input } from './input'
+export { default as Header } from './layout/header'
+export { default as Footer } from './layout/footer'
+export { default as Pagination } from './pagination'
+export { default as Loading } from './loading'

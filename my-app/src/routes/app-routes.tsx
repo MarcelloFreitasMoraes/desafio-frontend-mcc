@@ -1,16 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PATHS } from "./paths";
-import Home from "../page/Home/home";
-import Login from "../page/Login/login";
+import Home from "../page/home/home";
+import Login from "../page/login/login";
 import { useAuthStore } from "../auth/useStore";
+import BaseLayout from "../components/layout/base-layout";
 
 export const AppRoutes = () => {
     const { isAuthenticated } = useAuthStore(); 
-console.log(isAuthenticated, 'isAuthenticated');
 
     return (
         <BrowserRouter>
-            {/* <Header /> */}
+          <BaseLayout>
             <Routes>
                 <Route
                     path="/"
@@ -21,6 +21,7 @@ console.log(isAuthenticated, 'isAuthenticated');
                     <Route key={path} element={element} path={path} />
                 ))}
             </Routes>
+            </BaseLayout>
         </BrowserRouter>
     );
 };

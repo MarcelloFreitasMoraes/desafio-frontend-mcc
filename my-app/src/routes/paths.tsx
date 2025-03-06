@@ -1,5 +1,5 @@
-import Login from "../page/Login/login";
-import Register from "../page/Register/register";
+import Login from "../page/login/login";
+import Register from "../page/register/register";
 
 
 export const PATHS = [

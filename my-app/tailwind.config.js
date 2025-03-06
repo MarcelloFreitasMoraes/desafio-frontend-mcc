@@ -6,10 +6,12 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'login': "url('/bg-login.jpg')",
-        // 'footer-texture': "url('/img/footer-texture.png')",
-      }
+      fontFamily: {
+        starJedi: ['"Star Jedi"', "sans-serif"],
+        starJediHollow: ['"Star Jedi Hollow"', "sans-serif"],
+        orbitron: ['"Orbitron"', "sans-serif"],
+        dosis: ['"Dosis"', "sans-serif"],
+      },
     },
   },
   plugins: [],

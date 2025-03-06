@@ -1,3 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Orbitron:wght@400..900&display=swap");
+
+@font-face {
+  font-family: "Star Jedi";
+  src: url("/fonts/Starjedi.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Star Jedi Hollow";
+  src: url("/fonts/Starjhol.ttf") format("truetype");
+}
+
 @import "tailwindcss";
 @tailwind utilities;
 
@@ -5,4 +17,13 @@
 body {
   margin: 0;
   padding: 0;
+  /* @apply font-dosis; */
+}
+
+p, h2, h3, h4, h5, h6 { 
+  font-family: "Orbitron", sans-serif;
+}
+
+h1 {
+  font-family: "Dosis", sans-serif;
 }
