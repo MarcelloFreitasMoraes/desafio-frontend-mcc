@@ -1,4 +1,4 @@
-export interface PeopleProps {
+export interface PeopleData {
     count: number
     next: string
     previous: string
@@ -23,4 +23,40 @@ export interface PeopleProps {
     edited: string
     url: string
   }
+  
+  export interface FilmsData {
+    title: string
+    episode_id: number
+    opening_crawl: string
+    director: string
+    producer: string
+    release_date: string
+    characters: string[]
+    planets: string[]
+    starships: string[]
+    vehicles: string[]
+    species: string[]
+    created: string
+    edited: string
+    url: string
+  }
+
+  export interface SpeciesData {
+    name: string
+    classification: string
+    designation: string
+    average_height: string
+    skin_colors: string
+    hair_colors: string
+    eye_colors: string
+    average_lifespan: string
+    homeworld: string
+    language: string
+    people: string[]
+    films: string[]
+    created: string
+    edited: string
+    url: string
+  }
+  
   

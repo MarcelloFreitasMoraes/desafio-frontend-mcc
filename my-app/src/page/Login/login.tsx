@@ -28,7 +28,7 @@ const Login: React.FC = () => {
   const onSubmit = async ({ email, password }: LoginFormData) => {
     const success = await login(email, password);
     if (success) {
-      navigate("/");
+      navigate("/people");
     } else {
       alert("Email ou senha incorretos!");
     }

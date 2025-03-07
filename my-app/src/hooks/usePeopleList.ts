@@ -1,20 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { SwapiService } from '../service/useServiceData';
 import { usePaginationStore } from '../constants/usePaginationStore';
-import { PeopleProps } from './types';
 
-const peopleService = new SwapiService();
+const dataService = new SwapiService();
 
-export default function usePeopleData(search?: string) {
+export default function useData(endpoint: string, search?: string) {
     const { page } = usePaginationStore();
 
-    const { data, isLoading } = useQuery<PeopleProps>({
-        queryKey: search ? ['people', search] : ['people', page], 
-        queryFn: () => peopleService.getPeople(search ? undefined : page, search), 
+    const { data, isLoading } = useQuery({
+        queryKey: search ? [endpoint, search] : [endpoint, page], 
+        queryFn: () => dataService.getSwapi(endpoint, search ? undefined : page, search), 
     });
 
     return {
-        peopleQuery: data,
-        loadingPeople: isLoading,
+        query: data,
+        loading: isLoading,
     };
 }

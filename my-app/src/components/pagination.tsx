@@ -16,15 +16,15 @@ const Pagination: React.FC<PaginationProps> = ({ hasNext, hasPrevious }) => {
         onClick={() => setPage(page - 1)}
         disabled={!hasPrevious}
       >
-        Anterior
+        Previous
       </button>
-      <span className="text-white font-bold">Página {page}</span>
+      <span className="text-white font-bold">Page {page}</span>
       <button
         className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
         onClick={() => setPage(page + 1)}
         disabled={!hasNext}
       >
-        Próximo
+        Next
       </button>
     </div>
   );
