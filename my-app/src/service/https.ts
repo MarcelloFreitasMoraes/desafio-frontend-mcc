@@ -5,5 +5,3 @@ export const http = axios.create({
 })
 
 export const ENDPOINTS = ["people", "planets", "films", "species", "vehicles", "starships"];
-
-export const ITEMS_PER_PAGE = 10;

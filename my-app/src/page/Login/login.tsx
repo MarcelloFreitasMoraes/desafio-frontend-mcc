@@ -5,6 +5,7 @@ import { z } from "zod";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../auth/useStore";
 import { Button, Card, Input } from "../../components";
+import { useToast } from "../../constants/toast";
 
 const loginSchema = z.object({
   email: z.string().email("E-mail inválido").nonempty("O e-mail é obrigatório"),
@@ -16,6 +17,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 const Login: React.FC = () => {
   const { login } = useAuthStore();
   const navigate = useNavigate();
+  const { showToast } = useToast();
   
   const {
     register,
@@ -30,35 +32,35 @@ const Login: React.FC = () => {
     if (success) {
       navigate("/people");
     } else {
-      alert("Email ou senha incorretos!");
+      showToast("Email ou senha incorretos!")
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[url(/bg-login-top.gif)] bg-no-repeat bg-cover p-8">
-      <Card title="Bem-vindo" description="Faça login para acessar o sistema!">
+      <Card title="Welcome" description="Log in to access the system!">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-96">
           <Input
             label="Login"
-            placeholder="Digite o e-mail"
+            placeholder="Enter email"
             {...register("email")}
             error={errors.email?.message}
           />
 
           <Input
-            label="Senha"
+            label="Password"
             type="password"
-            placeholder="Digite a senha"
+            placeholder="Enter password"
             {...register("password")}
             error={errors.password?.message}
           />
 
           <Button type="submit" variant="primary" size="small">
-            Entrar
+            Sign in
           </Button>
 
           <p className="text-black text-sm">
-            Não tem conta? <Link to="/register" className="text-red-500">Criar conta!</Link>
+            {' '}  Don't have an account? <Link to="/register" className="text-red-500">Create account!</Link>
           </p>
         </form>
       </Card>

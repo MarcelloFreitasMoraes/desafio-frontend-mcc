@@ -37,8 +37,24 @@ export const useAuthStore = create<AuthState>((set) => {
     },
 
     logout: () => {
-      set({ user: null, isAuthenticated: false });
-      localStorage.removeItem("user");
+      set((state) => {
+        const storedUser = localStorage.getItem("user");
+
+        if (storedUser) {
+          const parsedUser = JSON.parse(storedUser);
+
+          const updatedUser = {
+            ...parsedUser,
+            isAuthenticated: false,
+          };
+
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+
+          return { user: updatedUser, isAuthenticated: false };
+        }
+
+        return state;
+      });
     },
 
     register: async (name, email, password) => {

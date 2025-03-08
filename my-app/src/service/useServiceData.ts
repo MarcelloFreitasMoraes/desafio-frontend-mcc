@@ -10,7 +10,7 @@ export class SwapiService {
             params.page = page; 
         }
 
-        const { data } = await http.get(`${endpoint}`, { params });
+        const { data } = await http.get(`${endpoint}/`, { params });
         return data;
     }
 }

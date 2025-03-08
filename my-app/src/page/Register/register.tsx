@@ -5,7 +5,7 @@ import { z } from "zod";
 import { Button, Card, Input } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../auth/useStore";
-import { CircleSmall, MoveLeft } from "lucide-react";
+import { CircleSmall, CircleCheckBig, CircleX, MoveLeft } from "lucide-react";
 
 const registerSchema = z
   .object({
@@ -15,10 +15,10 @@ const registerSchema = z
       .string()
       .min(12, "A senha deve ter pelo menos 12 caracteres")
       .max(40, "A senha deve ter no máximo 40 caracteres")
-      .regex(/[a-z]/, "Deve conter pelo menos uma letra minúscula")
-      .regex(/[A-Z]/, "Deve conter pelo menos uma letra maiúscula")
-      .regex(/[0-9]/, "Deve conter pelo menos um dígito (0-9)")
-      .regex(/[\W_]/, "Deve conter pelo menos um caractere especial"),
+      .regex(/[a-z]/, "Must contain at least one lowercase letter")
+      .regex(/[A-Z]/, "Must contain at least one capital letter")
+      .regex(/[0-9]/, "Must contain at least one digit (0-9)")
+      .regex(/[\W_]/, "Must contain at least one special character"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -41,6 +41,15 @@ const Register: React.FC = () => {
     resolver: zodResolver(registerSchema),
   });
 
+  const password = watch("password");
+  const confirmPassword = watch("confirmPassword");
+  const validateLowerCase = /[a-z]/.test(password || "");
+  const validateUpperCase = /[A-Z]/.test(password || "");
+  const validateNumber = /[0-9]/.test(password || "");
+  const validateSpecialChar = /[\W_]/.test(password || "");
+  const validateLength = password ? password.length >= 12 && password.length <= 40 : false;
+  const isPasswordValid = confirmPassword && password && password === confirmPassword;
+
   const onSubmit = async ({ name, email, password }: RegisterFormData) => {
     await registerUser(name, email, password);
     navigate("/login");
@@ -48,65 +57,50 @@ const Register: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[url(/bg-login-top.gif)] bg-no-repeat bg-cover p-8 gap-8">
-      <Card title="Criar nova conta" description="Preencha as informações abaixo!">
+      <Card title="Create new account" description="Fill in the information below!">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full">
-          <Input label="Nome *" {...register("name")} error={errors.name?.message} />
-
+          <Input label="Name" {...register("name")} error={errors.name?.message} required/>
+          <Input label="Email" {...register("email")} error={errors.email?.message} required />
           <Input
-            label="Email *"
-            {...register("email", {
-              required: "O e-mail é obrigatório",
-              pattern: {
-                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                message: "Por favor, insira um e-mail válido"
-              }
-            })}
-            error={errors.email?.message}
-          />
-
-          <Input label="Senha *" type="password" {...register("password")} error={errors.password?.message} />
-
-          <Input
-            label="Confirmar senha *"
+            label="Password"
             type="password"
-            {...register("confirmPassword", {
-              required: "Confirme sua senha",
-              validate: (value) => value === watch("password") || "As senhas não coincidem"
-            })}
-            error={errors.confirmPassword?.message}
+            {...register("password")}
+            error={errors.password?.message}
+            required
           />
+          <Input label="Confirm password" type="password" required {...register("confirmPassword")} error={errors.confirmPassword?.message} />
 
           <Button type="submit" variant="danger" size="small">
-            Criar
+            To create
           </Button>
-         <div className="flex gap-2 items-center cursor-pointer" onClick={() => navigate("/login")}>
-         <MoveLeft />
-         <p>Voltar</p>
-          </div> 
-          {/* Regras da senha */}
-          <div className="flex flex-col gap-4 mt-4">
+
+          <div className="flex gap-2 items-center cursor-pointer" onClick={() => navigate("/login")}>
+            <MoveLeft />
+            <p>Return to login screen</p>
+          </div>          
+        </form>
+        <div className="flex flex-col gap-4 mt-4">
             <div className="flex gap-1 items-center">
-              <CircleSmall />
-              <p className="text-black text-sm">Deve conter pelo menos uma letra minúscula</p>
+              {isPasswordValid ? (validateLowerCase ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              <p className="text-black text-sm">Must contain at least one lowercase letter</p>
             </div>
             <div className="flex gap-1 items-center">
-              <CircleSmall />
-              <p className="text-black text-sm">Deve conter pelo menos uma letra maiúscula</p>
+              {isPasswordValid ? (validateUpperCase ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              <p className="text-black text-sm">Must contain at least one capital letter</p>
             </div>
             <div className="flex gap-1 items-center">
-              <CircleSmall />
-              <p className="text-black text-sm">Deve conter pelo menos um dígito (0-9)</p>
+              {isPasswordValid ? (validateNumber ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              <p className="text-black text-sm">Must contain at least one digit (0-9)</p>
             </div>
             <div className="flex gap-1 items-center">
-              <CircleSmall />
-              <p className="text-black text-sm">Deve conter pelo menos um caractere especial</p>
+              {isPasswordValid ? (validateSpecialChar ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              <p className="text-black text-sm">Must contain at least one special character</p>
             </div>
             <div className="flex gap-1 items-center">
-              <CircleSmall />
-              <p className="text-black text-sm">Deve ter um comprimento entre 12 e 40 caracteres</p>
+              {isPasswordValid ? (validateLength ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              <p className="text-black text-sm">Must be between 12 and 40 characters long</p>
             </div>
           </div>
-        </form>
       </Card>
     </div>
   );

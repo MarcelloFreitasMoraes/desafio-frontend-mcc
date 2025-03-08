@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { Card, Input, Loading, Pagination } from '../../components';
-import usePeopleData from '../../hooks/usePeopleList';
+import usePeopleData from '../../hooks/useData';
 import { useForm } from 'react-hook-form';
 import { Search } from 'lucide-react';
 import { renderPersonInfo } from '../../constants/renderPersonInfo';
 import { FilmsData } from '../../hooks/types';
+import { useLocation } from 'react-router-dom';
 
-interface FilmsProps {
-  endpoint: string;
-}
-
-const Films: React.FC<FilmsProps> = ({ endpoint }) => {
+const Films: React.FC = () => {
+  const location = useLocation();
   const { register, handleSubmit } = useForm<{ search: string }>();
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -18,11 +16,10 @@ const Films: React.FC<FilmsProps> = ({ endpoint }) => {
     setSearchTerm(data.search);
   };
 
-  const { query, loading } = usePeopleData(endpoint, searchTerm);
+  const { query, loading } = usePeopleData(location.pathname, searchTerm);
 
   return (
-    <div className="bg-blue-950 min-h-screen flex flex-col items-center p-4">
-      <div className="max-w-screen-lg">
+    <div className="bg-blue-950 min-h-screen p-4">
         {loading ? (
           <div className="flex justify-center items-center h-screen">
             <Loading />
@@ -30,22 +27,22 @@ const Films: React.FC<FilmsProps> = ({ endpoint }) => {
         ) : (
           <>
             <div className="w-full flex flex-col items-center">
-              <h2 className="text-white text-base font-bold text-center md:text-start">
+              <h2 className="text-white text-xl font-bold text-center md:text-start">
                 Search by films
               </h2>
               <form onSubmit={handleSubmit(onSubmit)} className="gap-2 w-full">
-                <Input label="" placeholder='Buscar' {...register("search")} rightIcon={<Search />} />
+                <Input label="" placeholder='Search' {...register("search")} rightIcon={<Search />} />
               </form>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {query?.results.map((people: FilmsData) => {
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {query?.results.map((item: FilmsData) => {
 
                 return (
-                  <Card key={people.title} title={people.title}>
+                  <Card key={item.title} title={item.title}>
                     <div className="h-full w-full">
-                      {renderPersonInfo("Director", people.director)}
-                      {renderPersonInfo("Launch", people.release_date)}
-                      {renderPersonInfo("Producer", people.producer)}
+                      {renderPersonInfo("Director", item.director)}
+                      {renderPersonInfo("Launch", item.release_date)}
+                      {renderPersonInfo("Producer", item.producer)}
                     </div>
                   </Card>
                 );
@@ -53,10 +50,9 @@ const Films: React.FC<FilmsProps> = ({ endpoint }) => {
             </div>
           </>
         )}
-        {!!query?.next && (
+      {(query?.next || query?.previous) && (
           <Pagination hasNext={!!query?.next} hasPrevious={!!query?.previous} />
-        )}
-      </div>
+      )}
     </div>
   );
 };

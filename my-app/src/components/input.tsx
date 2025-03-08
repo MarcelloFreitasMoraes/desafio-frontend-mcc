@@ -7,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;
   leftIcon?: React.ReactNode; 
   rightIcon?: React.ReactNode; 
+  required?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -16,11 +17,12 @@ const Input: React.FC<InputProps> = ({
   className,
   leftIcon,
   rightIcon,
+  required,
   ...props
 }) => {
   return (
     <div className="flex flex-col gap-1">
-      <label className="pb-1 text-base text-black font-bold">{label}</label>
+      <label className="pb-1 text-base text-black font-bold">{label} <span className="text-red-500">{required && '*'}</span></label>
       <div className="relative">
         {leftIcon && (
           <button type="submit" className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
