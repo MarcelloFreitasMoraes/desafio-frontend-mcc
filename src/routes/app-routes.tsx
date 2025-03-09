@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PATHS } from "./paths";
-import Login from "../page/login/login";
 import { useAuthStore } from "../auth/useStore";
 import BaseLayout from "../components/layout/base-layout";
 import People from "../page/people/people";
-import Register from "../page/register/register";
+import Login from "../page/Login/login";
+import Register from "../page/Register/register";
 
 export const AppRoutes = () => {
     const { isAuthenticated } = useAuthStore(); 
