@@ -70,5 +70,5 @@ Através da API, os dados são carregados dinamicamente e exibidos nas telas do 
 http://localhost:5173/
  ```
 
- # autor
+ # Autor
  ### Marcelo Moraes
