@@ -8,7 +8,6 @@ import Register from "../page/Register/register";
 
 export const AppRoutes = () => {
     const { isAuthenticated } = useAuthStore(); 
-
     return (
         <BrowserRouter>
             {isAuthenticated ? (
