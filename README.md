@@ -50,28 +50,20 @@ Através da API, os dados são carregados dinamicamente e exibidos nas telas do 
 
 ## ⚙️ Como Rodar o Projeto
 
+   ```bash
 1. Clone este repositório:
-   ```bash
    git clone https://github.com/MarcelloFreitasMoraes/desafio-frontend-mcc.git
-    ```
-
+  
 2. Acesse o diretório do projeto:
-   ```bash
-  cd desafio-frontend-mcc
-   ```
+  cd desafio-frontend-mcc 
 
-3. Instale as dependências:
-   ```bash
-  npm install
-   ```
+3. Instale as dependências: 
+  npm install  
 
-4. Rode o projeto localmente:
-   ```bash
+4. Rode o projeto localmente: 
   npm run dev
-   ```
 
-5. Abra o navegador e acesse:
-   ```bash
+5. Abra o navegador e acesse:  
 http://localhost:5173/
  ```
 
