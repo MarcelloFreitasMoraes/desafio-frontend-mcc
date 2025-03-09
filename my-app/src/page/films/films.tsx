@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Input, Loading, Pagination } from '../../components';
+import { Card, Input, Loading, NotFound, Pagination } from '../../components';
 import usePeopleData from '../../hooks/useData';
 import { useForm } from 'react-hook-form';
 import { Search } from 'lucide-react';
@@ -20,20 +20,21 @@ const Films: React.FC = () => {
 
   return (
     <div className="bg-blue-950 min-h-screen p-4">
-        {loading ? (
-          <div className="flex justify-center items-center h-screen">
-            <Loading />
-          </div>
-        ) : (
-          <>
-            <div className="w-full flex flex-col items-center">
-              <h2 className="text-white text-xl font-bold text-center md:text-start">
-                Search by films
-              </h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="gap-2 w-full">
-                <Input label="" placeholder='Search' {...register("search")} rightIcon={<Search />} />
-              </form>
-            </div>
+      <div className="w-full flex flex-col items-center">
+        <h2 className="text-white text-xl font-bold text-center md:text-start">
+          Search by films
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="gap-2 w-full">
+          <Input label="" placeholder='Search' {...register("search")} rightIcon={<Search />} />
+        </form>
+      </div>
+      {loading ? (
+        <div className="flex justify-center items-center h-screen">
+          <Loading />
+        </div>
+      ) : (
+        <>
+          {query?.results?.length ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {query?.results.map((item: FilmsData) => {
 
@@ -48,10 +49,13 @@ const Films: React.FC = () => {
                 );
               })}
             </div>
-          </>
-        )}
+            ) : (
+              <NotFound />
+            )}
+        </>
+      )}
       {(query?.next || query?.previous) && (
-          <Pagination hasNext={!!query?.next} hasPrevious={!!query?.previous} />
+        <Pagination hasNext={!!query?.next} hasPrevious={!!query?.previous} />
       )}
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePaginationStore } from '../constants/usePaginationStore';
+import { ArrowBigLeft, ArrowBigRight } from 'lucide-react';
 
 interface PaginationProps {
   hasNext: boolean;
@@ -12,19 +13,19 @@ const Pagination: React.FC<PaginationProps> = ({ hasNext, hasPrevious }) => {
   return (
     <div className="flex justify-center items-center gap-4 p-4">
       <button
-        className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+        className={`bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50 ${hasPrevious ? 'cursor-pointer' : 'cursor-not-allowed'} `}
         onClick={() => setPage(page - 1)}
         disabled={!hasPrevious}
       >
-        Previous
+        <ArrowBigLeft />
       </button>
       <span className="text-white font-bold">Page {page}</span>
       <button
-        className="bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50"
+        className={`bg-gray-700 text-white px-4 py-2 rounded disabled:opacity-50 ${hasNext ? 'cursor-pointer' : 'cursor-not-allowed'}`}
         onClick={() => setPage(page + 1)}
         disabled={!hasNext}
       >
-        Next
+        <ArrowBigRight />
       </button>
     </div>
   );

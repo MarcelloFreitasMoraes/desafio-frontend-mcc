@@ -81,23 +81,23 @@ const Register: React.FC = () => {
         </form>
         <div className="flex flex-col gap-4 mt-4">
             <div className="flex gap-1 items-center">
-              {isPasswordValid ? (validateLowerCase ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              {isPasswordValid ? (validateLowerCase ? <CircleCheckBig className="text-green-600" /> : <CircleX />) : <CircleSmall />}
               <p className="text-black text-sm">Must contain at least one lowercase letter</p>
             </div>
             <div className="flex gap-1 items-center">
-              {isPasswordValid ? (validateUpperCase ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              {isPasswordValid ? (validateUpperCase ? <CircleCheckBig className="text-green-600" /> : <CircleX className="text-red-500" />) : <CircleSmall />}
               <p className="text-black text-sm">Must contain at least one capital letter</p>
             </div>
             <div className="flex gap-1 items-center">
-              {isPasswordValid ? (validateNumber ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              {isPasswordValid ? (validateNumber ? <CircleCheckBig className="text-green-600" /> : <CircleX className="text-red-500" />) : <CircleSmall />}
               <p className="text-black text-sm">Must contain at least one digit (0-9)</p>
             </div>
             <div className="flex gap-1 items-center">
-              {isPasswordValid ? (validateSpecialChar ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              {isPasswordValid ? (validateSpecialChar ? <CircleCheckBig className="text-green-600" /> : <CircleX className="text-red-500" />) : <CircleSmall />}
               <p className="text-black text-sm">Must contain at least one special character</p>
             </div>
             <div className="flex gap-1 items-center">
-              {isPasswordValid ? (validateLength ? <CircleCheckBig /> : <CircleX />) : <CircleSmall />}
+              {isPasswordValid ? (validateLength ? <CircleCheckBig className="text-green-600" /> : <CircleX className="text-red-500" />) : <CircleSmall />}
               <p className="text-black text-sm">Must be between 12 and 40 characters long</p>
             </div>
           </div>

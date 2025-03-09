@@ -8,8 +8,8 @@ import { Button, Card, Input } from "../../components";
 import { useToast } from "../../constants/toast";
 
 const loginSchema = z.object({
-  email: z.string().email("E-mail inválido").nonempty("O e-mail é obrigatório"),
-  password: z.string().min(6, "A senha deve ter pelo menos 6 caracteres"),
+  email: z.string().email("Invalid email").nonempty("Email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
     if (success) {
       navigate("/people");
     } else {
-      showToast("Email ou senha incorretos!")
+      showToast("Incorrect email or password!")
     }
   };
 

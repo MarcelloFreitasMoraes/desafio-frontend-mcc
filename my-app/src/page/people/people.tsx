@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Search } from 'lucide-react';
 import usePeopleData from '../../hooks/useData';
-import { Card, Input, Loading, Pagination } from '../../components';
+import { Card, Input, Loading, Modal, NotFound, Pagination } from '../../components';
 import { renderPersonInfo } from '../../constants/renderPersonInfo';
 import { Result } from '../../hooks/types';
 import { useLocation } from 'react-router-dom';
-import Modal from '../../components/modal';
 import useAllData from '../../hooks/useAllData';
 
 const People: React.FC = () => {
@@ -29,35 +28,39 @@ const People: React.FC = () => {
 
   return (
     <div className="bg-blue-950 min-h-screen p-4">
+      <div className="w-full flex flex-col items-center">
+        <h2 className="text-white text-xl font-bold text-center md:text-start">
+          Search by films
+        </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="gap-2 w-full">
+          <Input label="" placeholder='Search' {...register("search")} rightIcon={<Search />} />
+        </form>
+      </div>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
           <Loading />
         </div>
       ) : (
         <>
-            <div className="w-full flex flex-col items-center">
-              <h2 className="text-white text-xl font-bold text-center md:text-start">
-                Search by films
-              </h2>
-              <form onSubmit={handleSubmit(onSubmit)} className="gap-2 w-full">
-                <Input label="" placeholder='Search' {...register("search")} rightIcon={<Search />} />
-              </form>
-            </div>
+          {query?.results?.length ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {query?.results.map((item: Result) => {
                 const id = item.url.split("/").filter(Boolean).pop();
                 return (
-                <div className="cursor-pointer" onClick={() => handleCardClick(id as string)}>
-                  <Card key={item.name} title={item.name}>
-                    {renderPersonInfo("Height", item.height)}
-                    {renderPersonInfo("Mass", item.mass)}
-                    {renderPersonInfo("birth", item.birth_year)}
-                    {renderPersonInfo("Gender", item.gender)}
-                  </Card>
-                </div>
-              );
-            })}
+                  <div className="cursor-pointer" onClick={() => handleCardClick(id as string)}>
+                    <Card key={item.name} title={item.name}>
+                      {renderPersonInfo("Height", item.height)}
+                      {renderPersonInfo("Mass", item.mass)}
+                      {renderPersonInfo("birth", item.birth_year)}
+                      {renderPersonInfo("Gender", item.gender)}
+                    </Card>
+                  </div>
+                );
+              })}
             </div>
+            ) : (
+              <NotFound />
+            )}
         </>
       )}
       {(query?.next || query?.previous) && (

@@ -25,12 +25,12 @@ const Input: React.FC<InputProps> = ({
       <label className="pb-1 text-base text-black font-bold">{label} <span className="text-red-500">{required && '*'}</span></label>
       <div className="relative">
         {leftIcon && (
-          <button type="submit" className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+          <button type="submit" className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
             {leftIcon}
           </button>
         )}
         {rightIcon && (
-          <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+          <button type="submit" className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer">
             {rightIcon}
           </button>
         )}
