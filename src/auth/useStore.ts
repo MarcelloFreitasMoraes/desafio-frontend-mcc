@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => {
-  const storedUser = localStorage.getItem("user");
+  const storedUser = sessionStorage.getItem("user");
 
   const initialState = storedUser ? JSON.parse(storedUser) : { user: null, isAuthenticated: false };
 
@@ -18,7 +18,7 @@ export const useAuthStore = create<AuthState>((set) => {
     isAuthenticated: initialState.isAuthenticated,
 
     login: async (email, password) => {
-      const storedUser = localStorage.getItem("user");
+      const storedUser = sessionStorage.getItem("user");
 
       if (storedUser) {
         const { email: storedEmail, password: storedPassword, name, isAuthenticated } = JSON.parse(storedUser);
@@ -27,18 +27,18 @@ export const useAuthStore = create<AuthState>((set) => {
           set({ user: { name, email, isAuthenticated }, isAuthenticated: true });
 
           const updatedUser = { name, email, password: storedPassword, isAuthenticated: true };
-          localStorage.setItem("user", JSON.stringify(updatedUser));
+          sessionStorage.setItem("user", JSON.stringify(updatedUser));
 
-          return true; 
+          return true;
         }
       }
 
-      return false; 
+      return false;
     },
 
     logout: () => {
       set((state) => {
-        const storedUser = localStorage.getItem("user");
+        const storedUser = sessionStorage.getItem("user");
 
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>((set) => {
             isAuthenticated: false,
           };
 
-          localStorage.setItem("user", JSON.stringify(updatedUser));
+          sessionStorage.setItem("user", JSON.stringify(updatedUser));
 
           return { user: updatedUser, isAuthenticated: false };
         }
@@ -59,7 +59,7 @@ export const useAuthStore = create<AuthState>((set) => {
 
     register: async (name, email, password) => {
       const newUser = { name, email, password, isAuthenticated: false };
-      localStorage.setItem("user", JSON.stringify(newUser));
+      sessionStorage.setItem("user", JSON.stringify(newUser));
       set({ user: { name, email, isAuthenticated: false }, isAuthenticated: false });
       return true;
     },
